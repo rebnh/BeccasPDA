@@ -38,7 +38,7 @@ void show(const Turing_Machine &turing_machine, const Configuration_Settings &co
     cout << "Version 0.1" << endl << endl;
     cout << "Settings:" << endl;
     cout << "\tNumber of transitions: " << config_settings.maximum_number_of_transitions() << endl;
-    cout << "\tNumber of cells: " << config_settings.maximum_number_of_cells() <<  endl;
+    cout << "\tNumber of cells: " << config_settings.maximum_number_of_character() <<  endl;
     cout << "Turing machine:" << endl;
     cout << "\tName: " << definition_file_name << endl;
     if (turing_machine.is_operating()) {
@@ -130,7 +130,7 @@ void set(Configuration_Settings &config_settings)
 void truncate(Configuration_Settings &config_settings)
 {
     int new_setting;
-    cout << "Number of cells (current = " << config_settings.maximum_number_of_cells() << "): ";
+    cout << "Number of cells (current = " << config_settings.maximum_number_of_character() << "): ";
     cin >> new_setting;
     cin.ignore(numeric_limits<streamsize>::max(),'\n');
     if (cin.fail()) {
@@ -143,7 +143,7 @@ void truncate(Configuration_Settings &config_settings)
         cout << "Error! Invalid setting!" << endl;
         return;
     }
-    config_settings.update_maximum_number_of_cells(new_setting);
+    config_settings.update_maximum_number_of_character(new_setting);
 }
 
 void run(Turing_Machine &turing_machine, const Input_Strings &input_strings, const Configuration_Settings &config_settings)
@@ -165,13 +165,13 @@ void run(Turing_Machine &turing_machine, const Input_Strings &input_strings, con
         }
         turing_machine.initialize(input_strings.get_string(string_number));
         cout << turing_machine.total_number_of_transitions() << ". ";
-        turing_machine.view_instantaneous_description(config_settings.maximum_number_of_cells());
+        turing_machine.view_instantaneous_description(config_settings.maximum_number_of_character());
     }
     int check = turing_machine.total_number_of_transitions();
     turing_machine.perform_transitions(config_settings.maximum_number_of_transitions());
     if (check != turing_machine.total_number_of_transitions()) {
         cout << turing_machine.total_number_of_transitions() << ". ";
-        turing_machine.view_instantaneous_description(config_settings.maximum_number_of_cells());
+        turing_machine.view_instantaneous_description(config_settings.maximum_number_of_character());
     }
     if (turing_machine.is_accepted_input_string()) {
         cout << "Input string " << turing_machine.input_string() << " accepted in ";
